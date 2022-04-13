@@ -2,6 +2,12 @@ let playerScore = 0;
 let computerScore = 0;
 let round = 0;
 const btn = document.querySelectorAll("button");
+const playerPick = document.getElementById("playerPick");
+const computerPick = document.getElementById("computerPick");
+const roundText = document.getElementById("score");
+const computerWin = document.getElementById("computerWin");
+const playerWin = document.getElementById("playerWin");
+const result = document.getElementById("result");
 
 // this function will produce a random pick for computer
 // it will produce an int of 1-10 and return the corresponding if else statement
@@ -23,32 +29,35 @@ function playRound(playerSelect, computerSelect) {
   let a = playerSelect;
 
   if (a == "rock" && computerSelect == "rock") {
-    console.log("tie");
-    return "tie";
+    return result.textContent = "tie";
   } else if (a == "rock" && computerSelect == "paper") {
-    console.log("lost");
-    return "lost";
+    computerScore += 1;
+    computerWin.textContent = `${computerScore}`;
+    return result.textContent = "lost";
   } else if (a == "rock" && computerSelect == "scissor") {
-    console.log("win");
-    return "win";
+    playerScore += 1;
+    playerWin.textContent = `${playerScore}`;
+    return result.textContent = "win";
   } else if (a == "paper" && computerSelect == "paper") {
-    console.log("tie");
-    return "tie";
+    return result.textContent = "tie";
   } else if (a == "paper" && computerSelect == "rock") {
-    console.log("win");
-    return "win";
+    playerScore += 1;
+    playerWin.textContent = `${playerScore}`;
+    return result.textContent = "win";
   } else if (a == "paper" && computerSelect == "scissor") {
-    console.log("lost");
-    return "lost";
+    computerScore += 1;
+    computerWin.textContent = `${computerScore}`;
+    return result.textContent = "lost";
   } else if (a == "scissor" && computerSelect == "scissor") {
-    console.log("tie");
-    return "tie";
+    return result.textContent = "tie";
   } else if (a == "scissor" && computerSelect == "rock") {
-    console.log("lost");
-    return "lost";
+    computerScore += 1;
+    computerWin.textContent = `${computerScore}`;
+    return result.textContent = "lost";
   } else if (a == "scissor" && computerSelect == "paper") {
-    console.log("win");
-    return "win";
+    playerScore += 1;
+    playerWin.textContent = `${playerScore}`;
+    return result.textContent = "win";
   } else {
     return "pick rock, paper or scissor";
   }
@@ -58,12 +67,17 @@ function game() {
   btn.forEach((btn) => {
     // and for each one we add a 'click' listener
     btn.addEventListener("click", (e) => {
-      let playerSelect = btn.value;
       if (round < 5) {
+        round++;
+        roundText.textContent = `Score - Round: ${round}`;
+        let playerSelect = btn.value;
         let computer = computerPlay();
+        playerPick.textContent = playerSelect;
+        computerPick.textContent = computer;
         playRound(playerSelect, computer);
       } else {
-        return console.log("the game is finished");
+        return (roundText.textContent =
+          "game is finished please refresh the page to play again");
       }
     });
   });
